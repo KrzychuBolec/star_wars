@@ -22,8 +22,8 @@ const SearchBar = (props:SearchBarProps) => {
     }, [searchTerm]);
 
     return (
-        <Stack direction={"row"} sx={{background:"beige", height:"10%", width:"100%"}} alignItems={"center"} justifyContent={"center"} >
-            <Input type="text" onChange={(e) => setSearchTerm(e.target.value)}/>
+        <Stack direction={"row"} sx={{background:"black", height:"10%", width:"100%"}} alignItems={"center"} justifyContent={"center"} spacing={1} >
+            <Input placeholder="Search for a movie" type="text" onChange={(e) => setSearchTerm(e.target.value)}/>
             <DrillDown/>
         </Stack>
     )

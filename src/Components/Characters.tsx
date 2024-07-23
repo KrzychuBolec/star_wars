@@ -23,10 +23,10 @@ const Characters = (props:CharacterProps) => {
     
     return (
 
-        <Modal open={open} sx={{justifyContent:"center", alignItems:"center"}}>
+        <Modal open={open} sx={{justifyContent:"center", alignItems:"center"}} slotProps={{backdrop:{sx:{bgcolor:"transparent"}}}}>
             <ModalDialog>
 
-            <Stack direction={"column"} sx={{height:"100%", width:"100%"}} overflow={"auto"} alignItems={"center"} >
+            <Stack direction={"column"} sx={{height:"100%", width:"100%"}} overflow={"auto"} alignItems={"center"} spacing={1} >
                 <Typography level="h1" color="primary">Characters</Typography>
                 <Grid container sx={{width:"100%", height:"100%"}} spacing={1}>
                     {peopleUrls.map((personUrl, index) => {

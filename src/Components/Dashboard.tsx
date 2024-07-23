@@ -7,6 +7,24 @@ import Button from '@mui/joy/Button';
 import Characters from './Characters';
 import SearchBar from './SearchBar';
 import Card from '@mui/joy/Card';
+import { Skeleton } from '@mui/joy';
+import Movies from './Movies';
+
+const Skeletons = () => {
+
+
+    return (
+        <Stack direction={"row"} sx={{width:"100%", height:"fit-content"}} alignItems={"center"} justifyContent={"center"} spacing={1}>
+            <Skeleton width={300} height={200} sx={{position:"relative"}}/>
+            <Skeleton width={300} height={200} sx={{position:"relative"}}/>
+            <Skeleton width={300} height={200} sx={{position:"relative"}}/>
+            <Skeleton width={300} height={200} sx={{position:"relative"}}/>
+            <Skeleton width={300} height={200} sx={{position:"relative"}}/>
+
+        </Stack>
+    )
+
+}
 
 const Dashboard = () => {
 
@@ -14,6 +32,7 @@ const Dashboard = () => {
     const [modalOpen, setModalOpen] = useState(false);
     const [searchTerm, setSearchTerm] = useState<string>("");
     const TimeoutFetch = useRef<any>();
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
 
@@ -22,6 +41,7 @@ const Dashboard = () => {
         TimeoutFetch.current = setTimeout(() => {
             fetch(url).then(response => response.json()).then(data => {
                 setMovies(data.results);
+                setLoading(false);
             })
 
         }, 1000);
@@ -40,26 +60,10 @@ const Dashboard = () => {
 
 
         return (
-            <Stack direction={"column"} sx={{background:"white", height:"100%", width:"100%"}} spacing={1} >
+            <Stack direction={"column"} sx={{background:"white", height:"100%", width:"100%"}} spacing={1} position={"relative"} >
                 <SearchBar onSearch={onSearch}/>
                 <Stack direction={"column"} sx={{width:"100%", height:"100%", overflow:"auto"}} alignItems={"center"}>
-                    <Grid container sx={{width:"90%"}} spacing={1}>
-                        {movies.filter(movie=>movie.title.toUpperCase().startsWith(searchTerm)).map((movie, index) => {
-                            return <Grid key={index} maxWidth={"20vw"} sx={{overflow:"auto"}} >
-                                <Card>
-                                    <Typography level="title-lg">{movie.title}</Typography>
-                                    <Typography level="title-md">{movie.release_date}</Typography>
-                                    <Typography level="body-xs">{movie.opening_crawl}</Typography>
-                                    <Typography level="title-md">{movie.director}</Typography>
-                                    <Typography level="title-md">{movie.producer}</Typography>
-                                    <Button onClick={() => setModalOpen(true)}>Characters</Button>
-                                    <Characters peopleUrls={movie.characters} open={modalOpen} setOpen={setModalOpen}/>
-
-                                </Card>
-
-                            </Grid>
-                        })}
-                    </Grid>
+                    {loading ? <Skeletons/> : <Movies movies={movies} setModalOpen={setModalOpen} modalOpen={modalOpen} searchTerm={searchTerm}/>}
 
                 </Stack>
             </Stack>  
